@@ -27,7 +27,7 @@ class SimpleInteractiveTeacher:
         
     def setup_browser(self):
         """브라우저 설정"""
-        print("\n🌐 브라우저를 시작합니다...")
+        print("\n브라우저를 시작합니다...")
         
         options = Options()
         options.add_argument("--no-sandbox")
@@ -37,7 +37,7 @@ class SimpleInteractiveTeacher:
         self.driver = webdriver.Chrome(service=service, options=options)
         self.driver.maximize_window()
         
-        print("✅ 브라우저 시작 완료")
+        print("[OK] 브라우저 시작 완료")
         
     def inject_click_detector(self):
         """클릭 감지 스크립트 주입"""
@@ -76,8 +76,8 @@ class SimpleInteractiveTeacher:
         """
         
         self.driver.execute_script(script)
-        print("✅ 학습 모드가 활성화되었습니다.")
-        print("👆 이제 브라우저에서 학습할 요소를 클릭하세요!")
+        print("[OK] 학습 모드가 활성화되었습니다.")
+        print("--> 이제 브라우저에서 학습할 요소를 클릭하세요!")
         
     def get_clicked_element(self):
         """클릭한 요소 정보 가져오기"""
@@ -90,7 +90,7 @@ class SimpleInteractiveTeacher:
     def disable_learning_mode(self):
         """학습 모드 비활성화"""
         self.driver.execute_script("window.teacherMode = false;")
-        print("✅ 학습 모드가 비활성화되었습니다.")
+        print("[OK] 학습 모드가 비활성화되었습니다.")
         
     def find_element_smart(self, element_info):
         """여러 방법으로 요소 찾기 시도"""
@@ -128,7 +128,7 @@ class SimpleInteractiveTeacher:
     def teach_element(self):
         """요소 학습"""
         print("\n" + "="*50)
-        print("📚 요소 학습")
+        print("[학습] 요소 학습")
         print("="*50)
         
         # 학습 모드 활성화
@@ -137,10 +137,10 @@ class SimpleInteractiveTeacher:
         # 요소 이름 입력
         element_name = input("\n학습할 요소의 이름을 입력하세요 (예: 로그인버튼): ").strip()
         if not element_name:
-            print("❌ 요소 이름이 필요합니다.")
+            print("[X] 요소 이름이 필요합니다.")
             return
             
-        print(f"\n👆 브라우저에서 '{element_name}'에 해당하는 요소를 클릭하세요...")
+        print(f"\n--> 브라우저에서 '{element_name}'에 해당하는 요소를 클릭하세요...")
         print("(클릭한 요소는 노란색으로 표시됩니다)")
         
         # 클릭 대기
@@ -151,10 +151,10 @@ class SimpleInteractiveTeacher:
                 break
             print(f"대기 중... {10-i}초")
         else:
-            print("❌ 시간 초과. 요소를 클릭하지 않았습니다.")
+            print("[X] 시간 초과. 요소를 클릭하지 않았습니다.")
             return
             
-        print(f"\n✅ 요소를 찾았습니다!")
+        print(f"\n[OK] 요소를 찾았습니다!")
         print(f"태그: {clicked['tag']}")
         print(f"ID: {clicked.get('id', 'N/A')}")
         print(f"Class: {clicked.get('class', 'N/A')}")
@@ -179,7 +179,7 @@ class SimpleInteractiveTeacher:
             'learned_at': datetime.now().isoformat()
         }
         
-        print(f"\n✅ '{element_name}' 학습 완료!")
+        print(f"\n[OK] '{element_name}' 학습 완료!")
         
         # 클릭 정보 초기화
         self.clear_clicked()
@@ -194,7 +194,7 @@ class SimpleInteractiveTeacher:
     def test_element(self, element_name):
         """학습한 요소 테스트"""
         if element_name not in self.knowledge.get('elements', {}):
-            print(f"❌ '{element_name}'는 학습되지 않았습니다.")
+            print(f"[X] '{element_name}'는 학습되지 않았습니다.")
             return None
             
         element_info = self.knowledge['elements'][element_name]['info']
@@ -207,7 +207,7 @@ class SimpleInteractiveTeacher:
                 arguments[0].style.backgroundColor = 'lightgreen';
             """, element)
             
-            print(f"✅ '{element_name}' 요소를 찾았습니다!")
+            print(f"[OK] '{element_name}' 요소를 찾았습니다!")
             time.sleep(2)
             
             # 하이라이트 제거
@@ -218,7 +218,7 @@ class SimpleInteractiveTeacher:
             
             return element
         else:
-            print(f"❌ '{element_name}' 요소를 찾을 수 없습니다.")
+            print(f"[X] '{element_name}' 요소를 찾을 수 없습니다.")
             return None
             
     def save_knowledge(self):
@@ -234,7 +234,7 @@ class SimpleInteractiveTeacher:
         with open(knowledge_file, 'w', encoding='utf-8') as f:
             json.dump(self.knowledge, f, ensure_ascii=False, indent=2)
             
-        print(f"\n✅ 학습 내용 저장 완료: {knowledge_file}")
+        print(f"\n[OK] 학습 내용 저장 완료: {knowledge_file}")
         
     def load_knowledge(self, site_name):
         """기존 지식 로드"""
@@ -243,7 +243,7 @@ class SimpleInteractiveTeacher:
         if os.path.exists(knowledge_file):
             with open(knowledge_file, 'r', encoding='utf-8') as f:
                 self.knowledge = json.load(f)
-            print(f"✅ 기존 지식 로드: {len(self.knowledge.get('elements', {}))}개 요소")
+            print(f"[OK] 기존 지식 로드: {len(self.knowledge.get('elements', {}))}개 요소")
         else:
             print("새로운 사이트입니다. 학습을 시작하세요.")
             
@@ -251,7 +251,7 @@ class SimpleInteractiveTeacher:
         """대화형 메뉴"""
         while True:
             print("\n" + "="*50)
-            print("🎓 대화형 학습 시스템")
+            print("[학습 시스템] 대화형 학습 시스템")
             print("="*50)
             print("1. 웹사이트 열기")
             print("2. 요소 학습하기")
@@ -266,13 +266,13 @@ class SimpleInteractiveTeacher:
             if choice == "1":
                 url = input("URL 입력: ").strip()
                 self.driver.get(url)
-                print("✅ 페이지 로드 완료")
+                print("[OK] 페이지 로드 완료")
                 
                 # 알림창 처리
                 try:
                     alert = WebDriverWait(self.driver, 2).until(EC.alert_is_present())
                     alert.accept()
-                    print("✅ 알림창 처리")
+                    print("[OK] 알림창 처리")
                 except:
                     pass
                     
@@ -303,17 +303,17 @@ class SimpleInteractiveTeacher:
             print("\n학습한 요소가 없습니다.")
             return
             
-        print(f"\n📋 학습한 요소 ({len(elements)}개):")
+        print(f"\n[목록] 학습한 요소 ({len(elements)}개):")
         for name, data in elements.items():
             info = data['info']
-            print(f"\n• {name}")
+            print(f"\n- {name}")
             print(f"  태그: {info['tag']}")
             print(f"  ID: {info.get('id', 'N/A')}")
             print(f"  타입: {data['type']}")
             
     def run_automation(self):
         """간단한 자동화 실행"""
-        print("\n🤖 자동화 실행")
+        print("\n[자동화] 자동화 실행")
         
         # 카페24 로그인 예시
         if "아이디입력란" in self.knowledge.get('elements', {}):
@@ -335,13 +335,13 @@ class SimpleInteractiveTeacher:
             login_element = self.test_element("로그인버튼")
             if login_element:
                 login_element.click()
-                print("✅ 로그인 완료!")
+                print("[OK] 로그인 완료!")
         else:
             print("먼저 요소들을 학습하세요.")
             
     def run(self):
         """메인 실행"""
-        print("\n🎯 간단한 대화형 학습 시스템")
+        print("\n간단한 대화형 학습 시스템")
         print("화면을 보면서 요소를 클릭하여 학습합니다.")
         
         # 브라우저 시작
@@ -359,7 +359,7 @@ class SimpleInteractiveTeacher:
             self.interactive_menu()
             
         except Exception as e:
-            print(f"\n❌ 오류 발생: {e}")
+            print(f"\n[X] 오류 발생: {e}")
             
         finally:
             if self.driver:
