@@ -1,0 +1,88 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Logs
+*.log
+logs/
+*.log.*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Credentials and Secrets
+credentials.json
+secrets.json
+*.env
+.env.local
+config.local.yaml
+
+# Test
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Downloads
+Downloads/
+*.csv
+*.xls
+*.xlsx
+
+# Screenshots
+*.png
+*.jpg
+*.jpeg
+screenshots/
+
+# Temporary files
+temp/
+tmp/
+*.tmp
+*.temp
+
+# Backups
+*.bak
+backup/
+
+# ChromeDriver
+chromedriver.exe
+chromedriver
+
+# Knowledge backups (keep only latest)
+knowledge_backup_*.json
+
+# Generated scripts (optional - remove if you want to track them)
+# GENERATED_SCRIPTS/
+
+# Session data
+session_data/
+cookies.json
